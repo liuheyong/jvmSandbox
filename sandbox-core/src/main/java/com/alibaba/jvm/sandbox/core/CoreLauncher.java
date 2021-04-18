@@ -11,14 +11,12 @@ import static com.alibaba.jvm.sandbox.core.util.SandboxStringUtils.getCauseMessa
  */
 public class CoreLauncher {
 
-
     public CoreLauncher(final String targetJvmPid,
                         final String agentJarPath,
                         final String token) throws Exception {
-
         // 加载agent
+        
         attachAgent(targetJvmPid, agentJarPath, token);
-
     }
 
     /**
@@ -31,7 +29,6 @@ public class CoreLauncher {
      */
     public static void main(String[] args) {
         try {
-
             // check args
             if (args.length != 3
                     || StringUtils.isBlank(args[0])
@@ -39,7 +36,6 @@ public class CoreLauncher {
                     || StringUtils.isBlank(args[2])) {
                 throw new IllegalArgumentException("illegal args");
             }
-
             new CoreLauncher(args[0], args[1], args[2]);
         } catch (Throwable t) {
             t.printStackTrace(System.err);
@@ -52,21 +48,17 @@ public class CoreLauncher {
     private void attachAgent(final String targetJvmPid,
                              final String agentJarPath,
                              final String cfg) throws Exception {
-
         VirtualMachine vmObj = null;
         try {
-
             vmObj = VirtualMachine.attach(targetJvmPid);
             if (vmObj != null) {
                 vmObj.loadAgent(agentJarPath, cfg);
             }
-
         } finally {
             if (null != vmObj) {
                 vmObj.detach();
             }
         }
-
     }
 
 }

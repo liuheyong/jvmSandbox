@@ -64,19 +64,16 @@ public class JettyCoreServer implements CoreServer {
     public void unbind() throws IOException {
         try {
 
-            initializer.destroyProcess(new Initializer.Processor() {
-                @Override
-                public void process() throws Throwable {
+            initializer.destroyProcess(() -> {
 
-                    if (null != httpServer) {
+                if (null != httpServer) {
 
-                        // stop http server
-                        logger.info("{} is stopping", JettyCoreServer.this);
-                        httpServer.stop();
-
-                    }
+                    // stop http server
+                    logger.info("{} is stopping", JettyCoreServer.this);
+                    httpServer.stop();
 
                 }
+
             });
 
             // destroy http server
@@ -177,19 +174,16 @@ public class JettyCoreServer implements CoreServer {
     public synchronized void bind(final CoreConfigure cfg, final Instrumentation inst) throws IOException {
         this.cfg = cfg;
         try {
-            initializer.initProcess(new Initializer.Processor() {
-                @Override
-                public void process() throws Throwable {
-                    LogbackUtils.init(
-                            cfg.getNamespace(),
-                            cfg.getCfgLibPath() + File.separator + "sandbox-logback.xml"
-                    );
-                    logger.info("initializing server. cfg={}", cfg);
-                    jvmSandbox = new JvmSandbox(cfg, inst);
-                    initHttpServer();
-                    initJettyContextHandler();
-                    httpServer.start();
-                }
+            initializer.initProcess(() -> {
+                LogbackUtils.init(
+                        cfg.getNamespace(),
+                        cfg.getCfgLibPath() + File.separator + "sandbox-logback.xml"
+                );
+                logger.info("initializing server. cfg={}", cfg);
+                jvmSandbox = new JvmSandbox(cfg, inst);
+                initHttpServer();
+                initJettyContextHandler();
+                httpServer.start();
             });
 
             // 初始化加载所有的模块
@@ -222,7 +216,7 @@ public class JettyCoreServer implements CoreServer {
 
         // 关闭JVM-SANDBOX
         /*
-         * BUGFIX:
+         * BUG FIX:
          * jvmSandbox对象在一定情况下可能为空，导致这种情况的可能是destroy()调用发生在bind()方法调用之前
          * 所以这里做了一个判空处理，临时性解决这个问题。真正需要深究的是为什么destroy()竟然能在bind()之前被调用
          */

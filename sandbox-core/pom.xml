@@ -8,6 +8,7 @@
         <artifactId>sandbox</artifactId>
         <version>1.3.3</version>
     </parent>
+
     <artifactId>sandbox-core</artifactId>
     <name>sandbox-core ${sandbox.version}</name>
 

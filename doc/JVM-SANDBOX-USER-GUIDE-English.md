@@ -198,8 +198,6 @@ Then the sandbox has been successfully implanted in the target JVM, and opened a
   |event.pool.key.min|100|The event object pool holds the minimum value for each event|
   |event.pool.key.max|2000|The event object pool holds the maximum value for each event|
   |event.pool.total|3000|Event Object Pool Total Event Hold Value|
-  
-  
 
 ### Command description
 

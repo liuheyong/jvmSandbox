@@ -48,7 +48,7 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
     private final File[] moduleLibDirArray;
 
     // 已加载的模块集合
-    private final Map<String, CoreModule> loadedModuleBOMap = new ConcurrentHashMap<String, CoreModule>();
+    private final Map<String, CoreModule> loadedModuleBOMap = new ConcurrentHashMap<>();
 
     /**
      * 模块模块管理
@@ -77,7 +77,7 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
     }
 
     private File[] mergeFileArray(File[] aFileArray, File[] bFileArray) {
-        final List<File> _r = new ArrayList<File>();
+        final List<File> _r = new ArrayList<>();
         _r.addAll(Arrays.asList(aFileArray));
         _r.addAll(Arrays.asList(bFileArray));
         return _r.toArray(new File[]{});
@@ -91,7 +91,6 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
             final ModuleLifecycle moduleLifecycle = (ModuleLifecycle) coreModule.getModule();
             final String uniqueId = coreModule.getUniqueId();
             switch (type) {
-
                 case MODULE_LOAD: {
                     try {
                         moduleLifecycle.onLoad();
@@ -133,8 +132,7 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
 
         // 这里要对LOAD_COMPLETED事件做特殊处理
         // 因为这个事件处理失败不会影响模块变更行为，只做简单的日志处理
-        if (type == MODULE_LOAD_COMPLETED
-                && coreModule.getModule() instanceof LoadCompleted) {
+        if (type == MODULE_LOAD_COMPLETED && coreModule.getModule() instanceof LoadCompleted) {
             try {
                 ((LoadCompleted) coreModule.getModule()).loadCompleted();
             } catch (Throwable cause) {
@@ -393,7 +391,7 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
         logger.info("force unloading all loaded modules:{}", loadedModuleBOMap.keySet());
 
         // 强制卸载所有模块
-        for (final CoreModule coreModule : new ArrayList<CoreModule>(loadedModuleBOMap.values())) {
+        for (final CoreModule coreModule : new ArrayList<>(loadedModuleBOMap.values())) {
             try {
                 unload(coreModule, true);
             } catch (ModuleException cause) {
@@ -585,7 +583,7 @@ public class DefaultCoreModuleManager implements CoreModuleManager {
         // 1. 强制卸载所有模块
         unloadAll();
 
-        // 2. 加载所有模块
+        // 2. 加载所有模块 【系统模块和用户模块】
         for (final File moduleLibDir : moduleLibDirArray) {
             // 用户模块加载目录，加载用户模块目录下的所有模块
             // 对模块访问权限进行校验

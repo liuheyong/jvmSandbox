@@ -9,15 +9,13 @@ import java.net.InetSocketAddress;
 
 public class ProxyCoreServer implements CoreServer {
 
-    private final static Class<? extends CoreServer> classOfCoreServerImpl
-            = JettyCoreServer.class;
+    private final static Class<? extends CoreServer> classOfCoreServerImpl = JettyCoreServer.class;
 
     private final CoreServer proxy;
 
     private ProxyCoreServer(CoreServer proxy) {
         this.proxy = proxy;
     }
-
 
     @Override
     public boolean isBind() {

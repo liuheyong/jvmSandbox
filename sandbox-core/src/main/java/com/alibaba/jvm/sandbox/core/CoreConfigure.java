@@ -46,7 +46,7 @@ public class CoreConfigure {
 
     private static final FeatureCodec codec = new FeatureCodec(';', '=');
 
-    private final Map<String, String> featureMap = new LinkedHashMap<String, String>();
+    private final Map<String, String> featureMap = new LinkedHashMap<>();
 
     private CoreConfigure(final String featureString,
                           final String propertiesFilePath) {

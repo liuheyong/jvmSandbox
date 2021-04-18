@@ -74,7 +74,6 @@ class SandboxClassLoader extends URLClassLoader {
         return toString;
     }
 
-
     /**
      * 尽可能关闭ClassLoader
      * <p>
@@ -99,7 +98,6 @@ class SandboxClassLoader extends URLClassLoader {
             return;
         }
 
-
         // 对于JDK6的版本，URLClassLoader要关闭起来就显得有点麻烦，这里弄了一大段代码来稍微处理下
         // 而且还不能保证一定释放干净了，至少释放JAR文件句柄是没有什么问题了
         try {
@@ -115,11 +113,9 @@ class SandboxClassLoader extends URLClassLoader {
                     // if we got this far, this is probably not a JAR loader so skip it
                 }
             }
-
         } catch (Throwable cause) {
             // ignore...
         }
-
     }
 
     private <T> T forceGetDeclaredFieldValue(Class<?> clazz, String name, Object target) throws NoSuchFieldException, IllegalAccessException {

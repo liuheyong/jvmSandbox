@@ -82,26 +82,21 @@ public class SandboxProtector {
      */
     public <T> T protectProxy(final Class<T> protectTargetInterface,
                               final T protectTarget) {
-        return (T) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{protectTargetInterface}, new InvocationHandler() {
-
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                final int enterReferenceCount = enterProtecting();
-                try {
-                    return method.invoke(protectTarget, args);
-                } finally {
-                    final int exitReferenceCount = exitProtecting();
-                    assert enterReferenceCount == exitReferenceCount;
-                    if (enterReferenceCount != exitReferenceCount) {
-                        logger.warn("thread:{} exit protecting with error!, expect:{} actual:{}",
-                                Thread.currentThread(),
-                                enterReferenceCount,
-                                exitReferenceCount
-                        );
-                    }
+        return (T) Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[]{protectTargetInterface}, (proxy, method, args) -> {
+            final int enterReferenceCount = enterProtecting();
+            try {
+                return method.invoke(protectTarget, args);
+            } finally {
+                final int exitReferenceCount = exitProtecting();
+                assert enterReferenceCount == exitReferenceCount;
+                if (enterReferenceCount != exitReferenceCount) {
+                    logger.warn("thread:{} exit protecting with error!, expect:{} actual:{}",
+                            Thread.currentThread(),
+                            enterReferenceCount,
+                            exitReferenceCount
+                    );
                 }
             }
-
         });
     }
 

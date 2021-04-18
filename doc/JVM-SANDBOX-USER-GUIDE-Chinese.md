@@ -9,7 +9,6 @@
 
 ### 安装容器
 
-
 - **本地安装**
 
    - 首先需要[下载](http://gitlab.alibaba-inc.com/jvm-sandbox/jvm-sandbox-doc/raw/master/release/sandbox-stable-bin.zip)最新稳定版本

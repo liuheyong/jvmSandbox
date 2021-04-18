@@ -73,7 +73,6 @@ public abstract class Clock {
 
 }
 ```
-
 这个钟有两个实现类，
 
 - 一个是正常的实现
@@ -96,7 +95,6 @@ public abstract class Clock {
 
     }
 ```
-
   运行起来能每隔一秒进行一次报时
   
   ```
