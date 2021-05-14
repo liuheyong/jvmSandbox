@@ -205,7 +205,7 @@ public class AgentLauncher {
     }
 
     /**
-     * 在当前JVM安装jvm-sandbox
+     * 在当前JVM安装jvm-sandbox 安装到目标服务器jvm中
      *
      * @param featureMap 启动参数配置
      * @param inst       inst
